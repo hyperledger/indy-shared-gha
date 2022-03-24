@@ -6,6 +6,6 @@
 
 | Name             | Github           |
 | ---------------- | ---------------- |
-| pSchlarb | pSchlarb |
+| Philipp Schlarb | pSchlarb |
 | Robin Klemens | udosson |
 | Wade Barnes | WadeBarnes |
