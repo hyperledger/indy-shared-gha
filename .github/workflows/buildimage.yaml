@@ -6,20 +6,18 @@ on:
       CACHE_KEY_BUILD:
         required: true
         type: string
-      GITHUB_REPOSITORY_NAME:
+      UBUNTU_VERSION:
         required: true
         type: string
-      UBUNTU_VERSION:
+      DOCKER_IMAGE:
         required: true
         type: string
 jobs:
   build-image:
     name: Create Builder Image
-    # Reference to workflow-setup job is required to access its various outputs.
     runs-on: ubuntu-latest
     env:
       CACHE_KEY_BUILD: ${{ inputs.CACHE_KEY_BUILD }}
-      GITHUB_REPOSITORY_NAME: ${{ inputs.GITHUB_REPOSITORY_NAME }}
       UBUNTU_VERSION: ${{ inputs.UBUNTU_VERSION }}
     steps:
       - name: Git checkout
@@ -37,7 +35,6 @@ jobs:
         id: prep
         shell: bash
         run: |
-          DOCKER_IMAGE=ghcr.io/${{ env.GITHUB_REPOSITORY_NAME }}/plenum-build
           TAGS="${DOCKER_IMAGE}:latest,${DOCKER_IMAGE}:${{ env.UBUNTU_VERSION }}"
           echo ::set-output name=tags::${TAGS}
           echo ::set-output name=created::$(date -u +'%Y-%m-%dT%H:%M:%SZ')
@@ -73,4 +70,3 @@ jobs:
         run: |
           mkdir -p ${GITHUB_WORKSPACE}/cache
           touch ${GITHUB_WORKSPACE}/cache/${{ env.CACHE_KEY_BUILD }}
-          

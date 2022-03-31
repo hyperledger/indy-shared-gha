@@ -13,6 +13,9 @@ on:
       distribution:
         required: true
         type: string
+      moduleName:
+        required: true
+        type: string
     secrets:
       INDY_ARTIFACTORY_REPO_CONFIG: 
         required: true
@@ -42,16 +45,16 @@ jobs:
           # to ensure everything has been setup correctly.
           jfrog rt ping
 
-      - name: Download Plenum Artifacts from Pipeline Artifacts
+      - name: Download Artifacts from Pipeline Artifacts
         uses: actions/download-artifact@v2
         with:
-          name: plenum-deb
+          name: ${{inputs.moduleName}}-deb
           path: to_publish
 
-      - name: Publish Plenum Artifacts
+      - name: Publish Artifacts
         uses: ./.github/actions/publish-deb
         with:
-          sourceDirectory: /home/runner/work/indy-plenum/indy-plenum/to_publish
+          sourceDirectory: ./to_publish
           distribution: ${{ inputs.distribution }}
           component: ${{ env.COMPONENT }}
 
@@ -60,8 +63,8 @@ jobs:
         uses: actions/cache@v2
         with:
           path: /tmp/third-party-dependencies
-          key: ${{ format('third-party-dependencies-{0}', hashFiles(format('./build-scripts/{0}/build-3rd-parties.sh', inputs.UBUNTU_VERSION ))) }}           
-          
+          key: ${{ format('third-party-dependencies-{0}', hashFiles(format('./build-scripts/{0}/build-3rd-parties.sh', inputs.UBUNTU_VERSION ))) }}
+
       - name: Publish 3rd Party Dependencies
         uses: ./.github/actions/publish-deb
         with:
@@ -72,7 +75,7 @@ jobs:
       - name: Download Python Packages from Pipeline Artifacts
         uses: actions/download-artifact@v2
         with:
-          name: plenum-python
+          name: ${{inputs.moduleName}}-python
           path: dist
 
       - name: Publish Python Package to PyPI
@@ -81,4 +84,4 @@ jobs:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
           skip_existing: true
-
+          
