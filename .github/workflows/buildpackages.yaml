@@ -76,6 +76,12 @@ jobs:
           mkdir -p $GITHUB_WORKSPACE/build-scripts/${{ inputs.UBUNTU_VERSION }}/cache/3rd-party-dependencies/
           $GITHUB_WORKSPACE/build-scripts/${{ inputs.UBUNTU_VERSION }}/build-3rd-parties.sh ./cache/3rd-party-dependencies
           mv $GITHUB_WORKSPACE/build-scripts/${{ inputs.UBUNTU_VERSION }}/cache/* /tmp/third-party-dependencies
+      
+      - uses: actions/upload-artifact@v2
+        with:
+          name: third-party-dependencies
+          path: /tmp/third-party-dependencies
+          retention-days: 5
 
   build-python-packages:
     name: Build Python Packages
