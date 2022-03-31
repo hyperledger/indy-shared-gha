@@ -5,7 +5,6 @@ inputs:
   moduleName: 
     description: "The name of the module containing the version management APIs for the project; i.e. load_version and set_version"
     required: true
-    default: "plenum"
   isDev: 
     description: "A flag indicating whether or not this is a dev build; set to either 'true' or 'false'."
     required: true

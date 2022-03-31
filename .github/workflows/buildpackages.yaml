@@ -1,11 +1,9 @@
-name: "Build Plenum Packages"
+name: "Build Packages"
 
 on:
   workflow_call:
     inputs:
-      GITHUB_REPOSITORY_NAME:
-        required: true
-        type: string
+
       UBUNTU_VERSION:
         required: true
         type: string
@@ -13,6 +11,12 @@ on:
         required: true
         type: string
       isRC:
+        required: true
+        type: string
+      moduleName:
+        required: true
+        type: string
+      DOCKER_IMAGE:
         required: true
         type: string
 
@@ -23,7 +27,7 @@ jobs:
     env:
       UBUNTU_VERSION: ${{ inputs.UBUNTU_VERSION }}
     container:
-      image: ghcr.io/${{ inputs.GITHUB_REPOSITORY_NAME }}/plenum-build:${{ inputs.UBUNTU_VERSION }}
+      image: ${{inputs.DOCKER_IMAGE}}
     steps:
       - name: Check out code
         uses: actions/checkout@v1
@@ -32,19 +36,20 @@ jobs:
         id: version
         uses: ./.github/actions/set-version
         with:
-          moduleName: plenum
+          moduleName: ${{inputs.moduleName}}
           isDev: ${{ inputs.isDev }}
           isRC: ${{ inputs.isRC }}
 
       - name: Build Deployment Package
         run: |
-          mkdir -p /tmp/plenum-build
-          ./build-scripts/${{ env.UBUNTU_VERSION }}/build-indy-plenum.sh "/__w/indy-plenum/indy-plenum" "${{ steps.version.outputs.upstreamVer }}" "/tmp/plenum-build" "${{ steps.version.outputs.pkgVer }}"
+          mkdir -p /tmp/${{inputs.moduleName}}-build
+          ls -last $GITHUB_WORKSPACE/build-scripts/${{ env.UBUNTU_VERSION }}/
+          $GITHUB_WORKSPACE/build-scripts/${{ env.UBUNTU_VERSION }}/build-${{inputs.moduleName}}.sh $GITHUB_WORKSPACE "${{ steps.version.outputs.upstreamVer }}" "/tmp/${{inputs.moduleName}}-build" "${{ steps.version.outputs.pkgVer }}"
 
       - uses: actions/upload-artifact@v2
         with:
-          name: plenum-deb
-          path: /tmp/plenum-build
+          name: ${{inputs.moduleName}}-deb
+          path: /tmp/${{inputs.moduleName}}-build
           retention-days: 5
 
   build_3rd_party_dependencies:
@@ -53,7 +58,7 @@ jobs:
     env:
       UBUNTU_VERSION: ${{ inputs.UBUNTU_VERSION }}
     container:
-      image: ghcr.io/${{ inputs.GITHUB_REPOSITORY_NAME }}/plenum-build:${{ inputs.UBUNTU_VERSION }}
+      image: ${{inputs.DOCKER_IMAGE}}
     steps:
       - name: Check out code
         uses: actions/checkout@v1
@@ -64,13 +69,13 @@ jobs:
         with:
           path: /tmp/third-party-dependencies
           key: ${{ format('third-party-dependencies-{0}', hashFiles(format('./build-scripts/{0}/build-3rd-parties.sh', inputs.UBUNTU_VERSION ))) }}           
-   
+
       - name: Build 3rd party deployment packages
         if: steps.third-party-dependencies.outputs.cache-hit != 'true'
         run: |
-          mkdir -p ./build-scripts/${{ inputs.UBUNTU_VERSION }}/cache/3rd-party-dependencies/
-          ./build-scripts/${{ inputs.UBUNTU_VERSION }}/build-3rd-parties.sh ./cache/3rd-party-dependencies
-          mv ./build-scripts/${{ inputs.UBUNTU_VERSION }}/cache/* /tmp/third-party-dependencies
+          mkdir -p $GITHUB_WORKSPACE/build-scripts/${{ inputs.UBUNTU_VERSION }}/cache/3rd-party-dependencies/
+          $GITHUB_WORKSPACE/build-scripts/${{ inputs.UBUNTU_VERSION }}/build-3rd-parties.sh ./cache/3rd-party-dependencies
+          mv $GITHUB_WORKSPACE/build-scripts/${{ inputs.UBUNTU_VERSION }}/cache/* /tmp/third-party-dependencies
 
   build-python-packages:
     name: Build Python Packages
@@ -92,13 +97,13 @@ jobs:
         id: version
         uses: ./.github/actions/set-version
         with:
-          moduleName: plenum
+          moduleName: ${{inputs.moduleName}}
           isDev: ${{ inputs.isDev }}
           isRC: ${{ inputs.isRC }}
 
       - name: Prepare package and set version
         run: |
-          ./build-scripts/${{ inputs.UBUNTU_VERSION }}/prepare-package.sh . plenum "${{ steps.version.outputs.upstreamVer }}" python-packages
+          $GITHUB_WORKSPACE/build-scripts/${{ inputs.UBUNTU_VERSION }}/prepare-package.sh $GITHUB_WORKSPACE/ ${{inputs.moduleName}} "${{ steps.version.outputs.upstreamVer }}" python-packages
 
       - name: Building python package
         run: |
@@ -106,6 +111,6 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          name: plenum-python
+          name: ${{inputs.moduleName}}-python
           path: /tmp/dist
           retention-days: 5
