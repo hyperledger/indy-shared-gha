@@ -52,21 +52,20 @@ jobs:
           path: to_publish
 
       - name: Publish Artifacts
-        uses: ./.github/actions/publish-deb
+        uses: pschlarb/indy-shared-gha/.github/actions/publish-deb@parametrization
         with:
           sourceDirectory: ./to_publish
           distribution: ${{ inputs.distribution }}
           component: ${{ env.COMPONENT }}
-
-      - name: Download 3rd Party Artifacts Dependencies from Cache
-        id: third-party-dependencies
-        uses: actions/cache@v2
+                
+      - name: Download Artifacts from Pipeline Artifacts
+        uses: actions/download-artifact@v2
         with:
+          name: third-party-dependencies
           path: /tmp/third-party-dependencies
-          key: ${{ format('third-party-dependencies-{0}', hashFiles(format('./build-scripts/{0}/build-3rd-parties.sh', inputs.UBUNTU_VERSION ))) }}
 
       - name: Publish 3rd Party Dependencies
-        uses: ./.github/actions/publish-deb
+        uses: pschlarb/indy-shared-gha/.github/actions/publish-deb@parametrization
         with:
           sourceDirectory: /home/runner/tmp/third-party-dependencies
           distribution: ${{ inputs.distribution }}
