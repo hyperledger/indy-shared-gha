@@ -19,6 +19,7 @@ jobs:
     env:
       CACHE_KEY_BUILD: ${{ inputs.CACHE_KEY_BUILD }}
       UBUNTU_VERSION: ${{ inputs.UBUNTU_VERSION }}
+      DOCKER_IMAGE: ${{ inputs.DOCKER_IMAGE }}
     steps:
       - name: Git checkout
         uses: actions/checkout@v2
