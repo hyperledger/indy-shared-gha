@@ -52,7 +52,7 @@ jobs:
           path: to_publish
 
       - name: Publish Artifacts
-        uses: pschlarb/indy-shared-gha/.github/actions/publish-deb@parametrization
+        uses: hyperledger/indy-shared-gha/.github/actions/publish-deb@main
         with:
           sourceDirectory: ./to_publish
           distribution: ${{ inputs.distribution }}
@@ -65,7 +65,7 @@ jobs:
           path: /tmp/third-party-dependencies
 
       - name: Publish 3rd Party Dependencies
-        uses: pschlarb/indy-shared-gha/.github/actions/publish-deb@parametrization
+        uses: hyperledger/indy-shared-gha/.github/actions/publish-deb@main
         with:
           sourceDirectory: /home/runner/tmp/third-party-dependencies
           distribution: ${{ inputs.distribution }}
