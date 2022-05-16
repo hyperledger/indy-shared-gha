@@ -1,0 +1,30 @@
+name: "Get Branch from Tag"
+description: |
+  "Gets the branch name associated to a given tag.  
+   If more than one branch is referenced by the tag, the branch with the latest changes is selected."
+
+inputs:
+  tag:
+    description: "A string containing the tag to use for the search."
+    required: true
+    default: ""
+
+outputs:
+  branch:
+    description: "The name of the branch associated with the tag."
+    value: ${{ steps.get-branch-from-tag.outputs.branch }}
+runs:
+  using: "composite"
+  steps:
+    - name: Get Branch from Tag
+      id: get-branch-from-tag
+      shell: bash
+      run: |
+        # In the odd case a tagged commit is referenced on more than one branch sort the branches in 
+        # descending date order (newest to oldest) and pick the first one (newest) so the creation of 
+        # the PR does not fail.  This may still require the resulting PR to be manually retargeted to
+        # the desired branch.
+        raw=$(git branch -r --sort=-committerdate --contains ${{ inputs.tag }} | head -n 1)
+        branch=${raw//origin\/}
+        echo "::set-output name=branch::${branch}"
+        echo "::debug::'branch' is being set to ${branch}"
