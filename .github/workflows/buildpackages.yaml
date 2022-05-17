@@ -38,7 +38,7 @@ jobs:
 
       - name: Set Build Version
         id: version
-        uses:  hyperledger/indy-shared-gha/.github/actions/set-version@main
+        uses:  hyperledger/indy-shared-gha/.github/actions/set-version@v1.0.0
         with:
           moduleName: ${{inputs.moduleName}}
           isDev: ${{ inputs.isDev }}
@@ -87,7 +87,7 @@ jobs:
 
       - name: Set Build Version
         id: version
-        uses: hyperledger/indy-shared-gha/.github/actions/set-version@main
+        uses: hyperledger/indy-shared-gha/.github/actions/set-version@v1.0.0
         with:
           moduleName: ${{inputs.moduleName}}
           isDev: ${{ inputs.isDev }}
