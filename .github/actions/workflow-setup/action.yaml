@@ -4,10 +4,10 @@ description: "Gets the relevant information for the workflow"
 outputs:
   CACHE_KEY_BUILD: 
     description: "A Hash of the Dockerfile for checking if rebuild is needed"
-    value: ${{ steps.cache.outputs.CACHE_KEY_BUILD }}
+    value: ${{ steps.set-outputs.outputs.CACHE_KEY_BUILD }}
   UBUNTU_VERSION: 
     description: "The ubuntu version for which the packages are built"
-    value: ${{ steps.cache.outputs.UBUNTU_VERSION }}
+    value: ${{ steps.set-outputs.outputs.UBUNTU_VERSION }}
   # Expose the lowercase version of the GitHub repository name
   # to all subsequent jobs that reference image repositories
   # as the push and pull operations require the URL of the repository
