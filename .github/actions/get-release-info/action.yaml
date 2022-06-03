@@ -25,7 +25,7 @@ outputs:
     value: ${{ steps.version-info.outputs.isVersionBump }}
   component:
     description: "The component to which the deb packages should be published i.e. stable, rc"
-    value: ${{steps.version-info.outputs.component}}
+    value: ${{ steps.version-info.outputs.component }}
 runs:
   using: "composite"
   steps:

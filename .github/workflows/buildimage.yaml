@@ -29,7 +29,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${GITHUB_WORKSPACE}/cache
-          key: ${{ env.CACHE_KEY_BUILD}}
+          key: ${{ env.CACHE_KEY_BUILD }}
 
       - name: Prepare image labels and tags
         if: steps.cache-image.outputs.cache-hit != 'true'
