@@ -43,7 +43,7 @@ runs:
         echo "::set-output name=distribution::focal"
 
         # Ensure publishing is only performed when the build is executed from the main (hyperledger/indy-plenum) repository.
-        if [[ ${{github.repository_owner}} == 'hyperledger' ]]; then
+        if [[ ${{ github.repository_owner }} == 'hyperledger' ]]; then
           echo "::set-output name=publish::true"
         else
           echo "::set-output name=publish::false"

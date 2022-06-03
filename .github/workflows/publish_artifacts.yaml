@@ -48,7 +48,7 @@ jobs:
       - name: Download Artifacts from Pipeline Artifacts
         uses: actions/download-artifact@v2
         with:
-          name: ${{inputs.moduleName}}-deb
+          name: ${{ inputs.moduleName }}-deb
           path: to_publish
 
       - name: Publish Artifacts
@@ -74,7 +74,7 @@ jobs:
       - name: Download Python Packages from Pipeline Artifacts
         uses: actions/download-artifact@v2
         with:
-          name: ${{inputs.moduleName}}-python
+          name: ${{ inputs.moduleName }}-python
           path: dist
 
       - name: Publish Python Package to PyPI
