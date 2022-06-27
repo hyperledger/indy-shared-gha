@@ -33,7 +33,7 @@ runs:
       id: version-info
       shell: bash
       run: |
-        version=$(grep -oP "\d+.\d+.\d+(-?rc\d+)?" <<< "${{ inputs.versionString }}" || true)
+        version=$(grep -oP "\d+.\d+.\d+((-|.)?rc\d+)?" <<< "${{ inputs.versionString }}" || true)
         if [[ ! -z ${version}  ]]; then
           versionTag="v${version}"
           if [[ "${version}" == *'rc'* ]]; then
