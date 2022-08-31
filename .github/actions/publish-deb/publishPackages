@@ -4,7 +4,8 @@ SCRIPT_HOME="$( cd "$( dirname "$0" )" && pwd )"
 sourceDirectory=${1}
 distribution=${2}
 component=${3}
-uploadSpec=${UPLOAD_SPEC:-${4:-"${SCRIPT_HOME}/upload-spec.json"}}
+repo=${4:-indy}
+uploadSpec=${UPLOAD_SPEC:-${5:-"${SCRIPT_HOME}/upload-spec.json"}}
 
 export CI=true
 
@@ -22,11 +23,12 @@ for name in ${fileList}; do
   echo "distribution: ${distribution}"
   echo "component: ${component}"
   echo "uploadSpec: ${uploadSpec}"
+  echo "repo: ${repo}"
   echo "---------------------------------------------------------------------------------------------------------------------"
   jfrog rt u \
     --deb ${distribution}/${component}/${architecture} \
     --spec ${uploadSpec}\
-    --spec-vars "SOURCE_DIR=${sourceDirectory};PACKAGE_NAME=${name};COMPONENT=${component};PACKAGE_STARTING_LETTER=${startingLetter};PACKAGE_SHORT_NAME=${shortName};DISTRIBUTION=${distribution}" \
+    --spec-vars "REPO=${repo};SOURCE_DIR=${sourceDirectory};PACKAGE_NAME=${name};COMPONENT=${component};PACKAGE_STARTING_LETTER=${startingLetter};PACKAGE_SHORT_NAME=${shortName};DISTRIBUTION=${distribution}" \
     --detailed-summary
   echo "====================================================================================================================="
   echo
