@@ -120,7 +120,7 @@ jobs:
 
       - name: Try load from cache.
         id: third-party-dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: /tmp/third-party-dependencies
           key: ${{ format('third-party-dependencies-{0}', hashFiles(format('./build-scripts/{0}/build-3rd-parties.sh', inputs.UBUNTU_VERSION ))) }}           
