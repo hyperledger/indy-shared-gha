@@ -55,11 +55,11 @@ runs:
         fi
 
         # Set Outputs ...
-        echo "name=targetReleaseVer=${targetReleaseVer}" >> $GITHUB_OUTPUT
-        echo "name=upstreamVer=${upstreamVer}" >> $GITHUB_OUTPUT
-        echo "name=pkgVer=${pkgVer}" >> $GITHUB_OUTPUT
+        echo "targetReleaseVer=${targetReleaseVer}" >> $GITHUB_OUTPUT
+        echo "upstreamVer=${upstreamVer}" >> $GITHUB_OUTPUT
+        echo "pkgVer=${pkgVer}" >> $GITHUB_OUTPUT
         
-        echo "::group:DEBUG"
+        echo "::group::DEBUG"
         echo "Target Release version: ${targetReleaseVer}"
         echo "PyPI Release version: ${upstreamVer}"
         echo "Debian Release version: ${pkgVer}"
