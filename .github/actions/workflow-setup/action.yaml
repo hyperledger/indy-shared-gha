@@ -47,17 +47,15 @@ runs:
         echo "CACHE_KEY_BUILD=${{ hashFiles('.github/workflows/build/Dockerfile.ubuntu-2004') }}" >> $GITHUB_OUTPUT
         echo "UBUNTU_VERSION=ubuntu-2004" >> $GITHUB_OUTPUT
         echo "distribution=focal" >> $GITHUB_OUTPUT
-
-        # Ensure publishing is only performed when the build is executed from the main organization.
+        
+        echo "::group::DEBUG"        # Ensure publishing is only performed when the build is executed from the main organization.
         if [[ ${{ github.repository_owner }} == '${{ inputs.ownerRepo }}' ]]; then
-          echo "publish=true" >> $GITHUB_ENV
+          echo "publish=true" >> $GITHUB_OUTPUT
+          echo "publish = true"
         else
-          echo "publish=false" >> $GITHUB_ENV
+          echo "publish=false" >> $GITHUB_OUTPUT
+          echo "publish = false"
         fi
-
-        echo "${{ env.publish }}" >> $GITHUB_OUTPUT
-
-        echo "::group::DEBUG"
         echo "CACHE_KEY_BUILD=${{ hashFiles('.github/workflows/build/Dockerfile.ubuntu-2004') }}"
         echo "UBUNTU_VERSION=ubuntu-2004"
         echo "distribution=focal"
