@@ -55,11 +55,11 @@ runs:
           echo "publish=false" >> $GITHUB_ENV
         fi
 
-        echo "{{ env.publish }}" >> $GITHUB_OUTPUT
+        echo "${{ env.publish }}" >> $GITHUB_OUTPUT
 
         echo "::group::DEBUG"
         echo "CACHE_KEY_BUILD=${{ hashFiles('.github/workflows/build/Dockerfile.ubuntu-2004') }}"
         echo "UBUNTU_VERSION=ubuntu-2004"
         echo "distribution=focal"
-        echo "publish = {{ env.publish }}"
+        echo "publish = ${{ env.publish }}"
         echo "::endgroup::"
