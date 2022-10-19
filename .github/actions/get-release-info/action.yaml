@@ -69,10 +69,10 @@ runs:
         echo "isVersionBump=${isVersionBump}" >> $GITHUB_OUTPUT
 
         echo "::group::DEBUG"
-        echo "name=version::${version}"
-        echo "name=versionTag::${versionTag}"
-        echo "name=isRC::${isRC}"
-        echo "name=component::${component}"
-        echo "name=prBranch::${prBranch}"
-        echo "name=isVersionBump::${isVersionBump}"
+        echo "version::${version}"
+        echo "versionTag::${versionTag}"
+        echo "isRC::${isRC}"
+        echo "component::${component}"
+        echo "prBranch::${prBranch}"
+        echo "isVersionBump::${isVersionBump}"
         echo "::endgroup::"
