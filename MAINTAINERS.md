@@ -7,5 +7,12 @@
 | Name             | Github           |
 | ---------------- | ---------------- |
 | Philipp Schlarb | pSchlarb |
-| Robin Klemens | udosson |
 | Wade Barnes | WadeBarnes |
+
+## Emeritus Maintainers
+
+<!-- Please keep this sorted alphabetically by github -->
+
+| Name             | Github           |
+| ---------------- | ---------------- |
+| Robin Klemens | udosson |
