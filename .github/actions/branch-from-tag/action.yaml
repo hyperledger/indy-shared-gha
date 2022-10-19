@@ -26,5 +26,9 @@ runs:
         # the desired branch.
         raw=$(git branch -r --sort=-committerdate --contains ${{ inputs.tag }} | head -n 1)
         branch=${raw//origin\/}
-        echo "::set-output name=branch::${branch}"
+        echo "branch=${branch}" >> $GITHUB_OUTPUT
         echo "::debug::'branch' is being set to ${branch}"
+        echo "::group::DEBUG"
+        echo "'branch' is being set to ${branch}"
+        echo "::endgroup::"
+        

@@ -46,7 +46,7 @@ jobs:
           jfrog rt ping
 
       - name: Download Artifacts from Pipeline Artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: ${{ inputs.moduleName }}-deb
           path: to_publish
@@ -59,7 +59,7 @@ jobs:
           component: ${{ env.COMPONENT }}
                 
       - name: Download Artifacts from Pipeline Artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: third-party-dependencies
           path: ./third-party-dependencies_to_publish
@@ -72,7 +72,7 @@ jobs:
           component: ${{ env.COMPONENT }}
 
       - name: Download Python Packages from Pipeline Artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: ${{ inputs.moduleName }}-python
           path: dist

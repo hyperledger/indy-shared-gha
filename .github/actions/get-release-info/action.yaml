@@ -60,9 +60,19 @@ runs:
         echo "::debug::component: ${component}"
         echo "::debug::prBranch: ${prBranch}"
         echo "::debug::isVersionBump: ${isVersionBump}"
-        echo "::set-output name=version::${version}"
-        echo "::set-output name=versionTag::${versionTag}"
-        echo "::set-output name=isRC::${isRC}"
-        echo "::set-output name=component::${component}"
-        echo "::set-output name=prBranch::${prBranch}"
-        echo "::set-output name=isVersionBump::${isVersionBump}"
+
+        echo "version=${version}" >> $GITHUB_OUTPUT
+        echo "versionTag=${versionTag}" >> $GITHUB_OUTPUT
+        echo "isRC=${isRC}" >> $GITHUB_OUTPUT
+        echo "component=${component}" >> $GITHUB_OUTPUT
+        echo "prBranch=${prBranch}" >> $GITHUB_OUTPUT
+        echo "isVersionBump=${isVersionBump}" >> $GITHUB_OUTPUT
+
+        echo "::group::DEBUG"
+        echo "name=version::${version}"
+        echo "name=versionTag::${versionTag}"
+        echo "name=isRC::${isRC}"
+        echo "name=component::${component}"
+        echo "name=prBranch::${prBranch}"
+        echo "name=isVersionBump::${isVersionBump}"
+        echo "::endgroup::"
