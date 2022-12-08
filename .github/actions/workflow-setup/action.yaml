@@ -35,7 +35,7 @@ runs:
 
     - name: Convert the GitHub repository name to lowercase
       id: repository-name
-      uses: ASzc/change-string-case-action@v2
+      uses: ASzc/change-string-case-action@v5
       with:
         string: ${{ github.repository }}
 
