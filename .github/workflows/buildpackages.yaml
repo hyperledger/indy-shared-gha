@@ -72,6 +72,8 @@ jobs:
     name: Build Python Packages
     needs: [set-version]
     runs-on: ubuntu-20.04
+    container:
+      image: ${{ inputs.DOCKER_IMAGE }}
     steps:
       - name: Check out code
         uses: actions/checkout@v1
