@@ -34,7 +34,7 @@ jobs:
       pkgVer: ${{ steps.version.outputs.pkgVer }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
 
       - name: Set Build Version
         id: version
@@ -54,7 +54,7 @@ jobs:
       image: ${{ inputs.DOCKER_IMAGE }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
 
       - name: Build Deployment Package
         run: |
@@ -76,7 +76,7 @@ jobs:
       image: ${{ inputs.DOCKER_IMAGE }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
 
       - name: Set up Python 3.8
         uses: actions/setup-python@v2
@@ -118,7 +118,7 @@ jobs:
       image: ${{ inputs.DOCKER_IMAGE }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
 
       - name: Try load from cache.
         id: third-party-dependencies

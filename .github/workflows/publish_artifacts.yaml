@@ -32,7 +32,7 @@ jobs:
       UBUNTU_VERSION: ${{ inputs.UBUNTU_VERSION }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
 
       - name: Setup JFrog CLI
         uses: jfrog/setup-jfrog-cli@v2
