@@ -26,10 +26,8 @@ jobs:
               id: conversion
               run: |
                 pyVersion=$(echo ${{ inputs.VERSIONTAG }} | sed 's~v~~g')
-                if [[ ${{ inputs.VERSIONTAG }} == *"-"* ]]; then
-                pyVersion=$(echo $pyVersion | sed 's~-~.~g')
-                echo "pyVersion=$pyVersion">> $GITHUB_OUTPUT
-                else
-                echo "pyVersion=$pyVersion" >> $GITHUB_OUTPUT
+                if [[ ${pyVersion} == *"-"* ]]; then
+                  pyVersion=$(echo ${pyVersion} | sed 's~-~.~g')
                 fi
-                echo "debVersion=$(echo $pyVersion | sed -E 's/^([^\.]*\.[^\.]*\.[^\.]*)\.(.*)$/\1~\2/')" >> $GITHUB_OUTPUT
+                echo "pyVersion=${pyVersion}" >> $GITHUB_OUTPUT
+                echo "debVersion=$(echo ${pyVersion} | sed -E 's/^([^\.]*\.[^\.]*\.[^\.]*)\.(.*)$/\1~\2/')" >> $GITHUB_OUTPUT
