@@ -89,6 +89,10 @@ jobs:
 
       - name: Install required packages via pip
         run: |
+          # Installation of pip==23.0.1 is a workaround for the deprecated --install-option flag
+          # used in plenum's setup.py to install pyzmq==22.3.0.
+          python3 -m pip install --ignore-installed --upgrade pip==23.0.1
+
           python3 -m pip install pytest-runner wheel
 
       - name: Set Build Version
