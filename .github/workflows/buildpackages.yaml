@@ -81,6 +81,12 @@ jobs:
         with:
           python-version: 3.8
 
+      - name: List Python and PIP versions
+        run: |
+          python3 --version
+          pip --version
+          pip3 --version
+
       - name: Install required packages via pip
         run: |
           python3 -m pip install pytest-runner wheel
@@ -123,7 +129,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: /tmp/third-party-dependencies
-          key: ${{ format('third-party-dependencies-{0}', hashFiles(format('./build-scripts/{0}/build-3rd-parties.sh', inputs.UBUNTU_VERSION ))) }}           
+          key: ${{ format('third-party-dependencies-{0}', hashFiles(format('./build-scripts/{0}/build-3rd-parties.sh', inputs.UBUNTU_VERSION ))) }}
 
       - name: Build 3rd party deployment packages
         if: steps.third-party-dependencies.outputs.cache-hit != 'true'
@@ -131,7 +137,7 @@ jobs:
           mkdir -p $GITHUB_WORKSPACE/build-scripts/${{ inputs.UBUNTU_VERSION }}/cache/3rd-party-dependencies/
           $GITHUB_WORKSPACE/build-scripts/${{ inputs.UBUNTU_VERSION }}/build-3rd-parties.sh ./cache/3rd-party-dependencies
           mv $GITHUB_WORKSPACE/build-scripts/${{ inputs.UBUNTU_VERSION }}/cache/* /tmp/third-party-dependencies
-      
+
       - uses: actions/upload-artifact@v3
         with:
           name: third-party-dependencies
