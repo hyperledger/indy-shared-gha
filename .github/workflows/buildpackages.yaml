@@ -77,7 +77,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Python 3.8
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v5
         with:
           python-version: 3.8
 
@@ -130,7 +130,7 @@ jobs:
 
       - name: Try load from cache.
         id: third-party-dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: /tmp/third-party-dependencies
           key: ${{ format('third-party-dependencies-{0}', hashFiles(format('./build-scripts/{0}/build-3rd-parties.sh', inputs.UBUNTU_VERSION ))) }}
