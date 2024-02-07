@@ -17,9 +17,9 @@ on:
         required: true
         type: string
     secrets:
-      INDY_ARTIFACTORY_REPO_CONFIG: 
+      INDY_ARTIFACTORY_REPO_CONFIG:
         required: true
-      PYPI_API_TOKEN: 
+      PYPI_API_TOKEN:
         required: true
 
 
@@ -32,10 +32,10 @@ jobs:
       UBUNTU_VERSION: ${{ inputs.UBUNTU_VERSION }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup JFrog CLI
-        uses: jfrog/setup-jfrog-cli@v2
+        uses: jfrog/setup-jfrog-cli@v4
         env:
           JF_ENV_1: ${{ secrets.INDY_ARTIFACTORY_REPO_CONFIG }}
 
@@ -46,7 +46,7 @@ jobs:
           jfrog rt ping
 
       - name: Download Artifacts from Pipeline Artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: ${{ inputs.moduleName }}-deb
           path: to_publish
@@ -57,9 +57,9 @@ jobs:
           sourceDirectory: ./to_publish
           distribution: ${{ inputs.distribution }}
           component: ${{ env.COMPONENT }}
-                
+
       - name: Download Artifacts from Pipeline Artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: third-party-dependencies
           path: ./third-party-dependencies_to_publish
@@ -72,15 +72,25 @@ jobs:
           component: ${{ env.COMPONENT }}
 
       - name: Download Python Packages from Pipeline Artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: ${{ inputs.moduleName }}-python
           path: dist
 
       - name: Publish Python Package to PyPI
+        # Trusted Publishing Support
+        # - https://github.com/pypa/gh-action-pypi-publish?tab=readme-ov-file#trusted-publishing
+        # - Though pypa/gh-action-pypi-publish supports trusted publishing, trusted publishing is not
+        #   supported within reusable workflows.
+        # - Since we're using pypa/gh-action-pypi-publish from within a reusable workflow
+        #   we are unable to use trusted publishing.
+        # - Following the guidance to use trusted publishing requires the action be called
+        #   from the top-level (in the non-reusable workflow).  Since publishing is common
+        #   to the indy projects this would create unwanted code duplication.
+        # - The hope is trusted publishing will be supported from within reusable workflows
+        #   in the future.
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
-          skip_existing: true
-          
+          skip-existing: true
