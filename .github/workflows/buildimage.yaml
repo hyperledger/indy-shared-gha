@@ -22,7 +22,7 @@ jobs:
       DOCKER_IMAGE: ${{ inputs.DOCKER_IMAGE }}
     steps:
       - name: Git checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Try load from cache
         id: cache-image
@@ -41,7 +41,7 @@ jobs:
           echo "created=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
 
           echo "::group::DEBUG"
-          echo "tags=${TAGS}" 
+          echo "tags=${TAGS}"
           echo "created=$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
           echo "::endgroup::"
       - name: Log into the GitHub Container Registry

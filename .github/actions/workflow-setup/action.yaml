@@ -7,17 +7,17 @@ inputs:
     default: "hyperledger"
     required: false
 outputs:
-  CACHE_KEY_BUILD: 
+  CACHE_KEY_BUILD:
     description: "A Hash of the Dockerfile for checking if rebuild is needed"
     value: ${{ steps.set-outputs.outputs.CACHE_KEY_BUILD }}
-  UBUNTU_VERSION: 
+  UBUNTU_VERSION:
     description: "The ubuntu version for which the packages are built"
     value: ${{ steps.set-outputs.outputs.UBUNTU_VERSION }}
   # Expose the lowercase version of the GitHub repository name
   # to all subsequent jobs that reference image repositories
   # as the push and pull operations require the URL of the repository
   # to be in lowercase.
-  GITHUB_REPOSITORY_NAME: 
+  GITHUB_REPOSITORY_NAME:
     description: "lowercase Github Repository name"
     value: ${{ steps.repository-name.outputs.lowercase }}
   distribution:
@@ -31,11 +31,11 @@ runs:
   using: "composite"
   steps:
     - name: Git checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Convert the GitHub repository name to lowercase
       id: repository-name
-      uses: ASzc/change-string-case-action@v5
+      uses: ASzc/change-string-case-action@v6
       with:
         string: ${{ github.repository }}
 
@@ -47,7 +47,7 @@ runs:
         echo "CACHE_KEY_BUILD=${{ hashFiles('.github/workflows/build/Dockerfile.ubuntu-2004') }}" >> $GITHUB_OUTPUT
         echo "UBUNTU_VERSION=ubuntu-2004" >> $GITHUB_OUTPUT
         echo "distribution=focal" >> $GITHUB_OUTPUT
-        
+
         echo "::group::DEBUG"        # Ensure publishing is only performed when the build is executed from the main organization.
         if [[ ${{ github.repository_owner }} == '${{ inputs.ownerRepo }}' ]]; then
           echo "publish=true" >> $GITHUB_OUTPUT
