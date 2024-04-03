@@ -26,7 +26,7 @@ jobs:
   # Make sure the version is only calculated once for consistency.
   set-version:
     name: Set Version
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     container:
       image: ${{ inputs.DOCKER_IMAGE }}
     outputs:
@@ -47,7 +47,7 @@ jobs:
   build-release:
     name: Build Release
     needs: [set-version]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     env:
       UBUNTU_VERSION: ${{ inputs.UBUNTU_VERSION }}
     container:
@@ -71,7 +71,7 @@ jobs:
   build-python-packages:
     name: Build Python Packages
     needs: [set-version]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -119,7 +119,7 @@ jobs:
 
   build-3rd-party-dependencies:
     name: Build 3rd Party Dependencies
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     env:
       UBUNTU_VERSION: ${{ inputs.UBUNTU_VERSION }}
     container:

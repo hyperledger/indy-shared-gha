@@ -44,8 +44,8 @@ runs:
       shell: bash
       run: |
 
-        echo "CACHE_KEY_BUILD=${{ hashFiles('.github/workflows/build/Dockerfile.ubuntu-2004') }}" >> $GITHUB_OUTPUT
-        echo "UBUNTU_VERSION=ubuntu-2004" >> $GITHUB_OUTPUT
+        echo "CACHE_KEY_BUILD=${{ hashFiles('.github/workflows/build/Dockerfile.ubuntu-2204') }}" >> $GITHUB_OUTPUT
+        echo "UBUNTU_VERSION=ubuntu-2204" >> $GITHUB_OUTPUT
         echo "distribution=focal" >> $GITHUB_OUTPUT
 
         echo "::group::DEBUG"        # Ensure publishing is only performed when the build is executed from the main organization.
@@ -56,8 +56,8 @@ runs:
           echo "publish=false" >> $GITHUB_OUTPUT
           echo "publish = false"
         fi
-        echo "CACHE_KEY_BUILD=${{ hashFiles('.github/workflows/build/Dockerfile.ubuntu-2004') }}"
-        echo "UBUNTU_VERSION=ubuntu-2004"
+        echo "CACHE_KEY_BUILD=${{ hashFiles('.github/workflows/build/Dockerfile.ubuntu-2204') }}"
+        echo "UBUNTU_VERSION=ubuntu-2204"
         echo "distribution=focal"
         echo "publish = ${{ env.publish }}"
         echo "::endgroup::"
