@@ -46,7 +46,7 @@ runs:
 
         echo "CACHE_KEY_BUILD=${{ hashFiles('.github/workflows/build/Dockerfile.ubuntu-2204') }}" >> $GITHUB_OUTPUT
         echo "UBUNTU_VERSION=ubuntu-2204" >> $GITHUB_OUTPUT
-        echo "distribution=focal" >> $GITHUB_OUTPUT
+        echo "distribution=jammy" >> $GITHUB_OUTPUT
 
         echo "::group::DEBUG"        # Ensure publishing is only performed when the build is executed from the main organization.
         if [[ ${{ github.repository_owner }} == '${{ inputs.ownerRepo }}' ]]; then
@@ -58,6 +58,6 @@ runs:
         fi
         echo "CACHE_KEY_BUILD=${{ hashFiles('.github/workflows/build/Dockerfile.ubuntu-2204') }}"
         echo "UBUNTU_VERSION=ubuntu-2204"
-        echo "distribution=focal"
+        echo "distribution=jammy"
         echo "publish = ${{ env.publish }}"
         echo "::endgroup::"
